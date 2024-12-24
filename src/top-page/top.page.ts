@@ -35,7 +35,7 @@ export class TopPageAdvantage {
 }
 
 @Schema({timestamps: true})
-export class TopPageModel {
+export class TopPage {
   @Prop({ enum: TopLevelCategory })
   firstCategory: TopLevelCategory;
 
@@ -73,7 +73,7 @@ export class TopPageModel {
   tags: string[];
 
   createInstance(dto: CreateTopPageDto){
-    const page = new TopPageModel();
+    const page = new TopPage();
     page.firstCategory = dto.firstCategory;
     page.secondCategory = dto.secondCategory;
     page.alias = dto.alias;
@@ -90,10 +90,10 @@ export class TopPageModel {
   }
 }
 
-const TopPageModelSchema = SchemaFactory.createForClass(TopPageModel);
-TopPageModelSchema.loadClass(TopPageModel);
+const TopPageModelSchema = SchemaFactory.createForClass(TopPage);
+TopPageModelSchema.loadClass(TopPage);
 TopPageModelSchema.index({ '$**': 'text' })
 
-export type TopPageDocument = HydratedDocument<TopPageModel>;
+export type TopPageDocument = HydratedDocument<TopPage>;
 
 

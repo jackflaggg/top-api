@@ -12,7 +12,7 @@ export class ProductCharacteristic {
 }
 
 @Schema({timestamps: true})
-export class ProductModel {
+export class Product {
   @Prop()
   image: string;
 
@@ -72,7 +72,7 @@ export class ProductModel {
   }
 }
 
-export const ProductSchema = SchemaFactory.createForClass(ProductModel);
-ProductSchema.loadClass(ProductModel)
+export const ProductSchema = SchemaFactory.createForClass(Product);
+ProductSchema.loadClass(Product)
 
-export type ProductDocument = HydratedDocument<ProductModel>;
+export type ProductDocument = HydratedDocument<Product>;

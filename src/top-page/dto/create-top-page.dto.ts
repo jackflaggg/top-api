@@ -1,5 +1,5 @@
 import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { TopLevelCategory } from '../top-page.model';
+import { TopLevelCategory } from '../top.page';
 import { Type } from 'class-transformer';
 
 export class HhDataDto {
