@@ -1,4 +1,6 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+import { CreateTopPageDto } from './dto/create-top-page.dto';
 
 export enum TopLevelCategory {
   Courses,
@@ -32,7 +34,6 @@ export class TopPageAdvantage {
   description: string;
 }
 
-// @index({ '$**': 'text' })
 @Schema({timestamps: true})
 export class TopPageModel {
   @Prop({ enum: TopLevelCategory })
@@ -70,5 +71,29 @@ export class TopPageModel {
 
   @Prop({ type: () => [String] })
   tags: string[];
+
+  createInstance(dto: CreateTopPageDto){
+    const page = new TopPageModel();
+    page.firstCategory = dto.firstCategory;
+    page.secondCategory = dto.secondCategory;
+    page.alias = dto.alias;
+    page.title = dto.title;
+    page.metaTitle = dto.metaTitle
+    page.metaDescription = dto.metaDescription
+    page.category = dto.category;
+    page.hh = dto.hh;
+    page.advantages = dto.advantages;
+    page.seoText = dto.seoText;
+    page.tagsTitle = dto.tagsTitle;
+    page.tags = dto.tags;
+    return page as TopPageDocument;
+  }
 }
+
+const TopPageModelSchema = SchemaFactory.createForClass(TopPageModel);
+TopPageModelSchema.loadClass(TopPageModel);
+TopPageModelSchema.index({ '$**': 'text' })
+
+export type TopPageDocument = HydratedDocument<TopPageModel>;
+
 

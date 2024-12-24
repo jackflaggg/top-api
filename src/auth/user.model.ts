@@ -20,8 +20,9 @@ export class User {
   }
 }
 
+// определяем структуру документа
 export const UserSchema = SchemaFactory.createForClass(User);
-
+// связывание класса User со схемой (загружаются методы)
 UserSchema.loadClass(User);
 
 export type UserDocument = HydratedDocument<User>;

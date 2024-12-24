@@ -1,5 +1,7 @@
-import { Prop, Schema } from '@nestjs/mongoose';
-import { IsArray, IsOptional } from 'class-validator';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsArray, IsOptional} from 'class-validator';
+import { HydratedDocument } from 'mongoose';
+import { CreateProductDto } from './dto/create-product.dto';
 
 export class ProductCharacteristic {
   @Prop()
@@ -51,4 +53,26 @@ export class ProductModel {
   @Prop({ type: [ProductCharacteristic], _id: false})
   @IsArray()
   characteristics: ProductCharacteristic[]
+
+  static createInstance(dto: CreateProductDto): ProductDocument {
+    const product = new this();
+    product.image = dto.image;
+    product.title = dto.title
+    product.calculatedRating = dto.initialRating;
+    product.price = String(dto.price);
+    product.oldPrice = String(dto.oldPrice);
+    product.credit = dto.credit;
+    product.description = dto.description;
+    product.advantages = dto.advantages;
+    product.disAdvantages = dto.disAdvantages;
+    product.categories = dto.categories;
+    product.tags = dto.tags;
+    product.characteristics = dto.characteristics;
+    return product as ProductDocument;
+  }
 }
+
+export const ProductSchema = SchemaFactory.createForClass(ProductModel);
+ProductSchema.loadClass(ProductModel)
+
+export type ProductDocument = HydratedDocument<ProductModel>;
